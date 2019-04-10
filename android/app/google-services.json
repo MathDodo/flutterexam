@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "436399204975",
+    "firebase_url": "https://usercore-83754.firebaseio.com",
+    "project_id": "usercore-83754",
+    "storage_bucket": "usercore-83754.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436399204975:android:e2a92cbf8031890f",
+        "android_client_info": {
+          "package_name": "com.example.usercore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBauUSUwqfWSU_u5yl5_JjkMw3tx7XjwTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "436399204975-hhh69jgpjdphqsrh2uvubir59986d4ja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
