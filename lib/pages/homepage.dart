@@ -24,6 +24,9 @@ class _HomepageState extends State<Homepage>
             new ListTile(
               title: new Text("Home"),
               trailing: new Icon(Icons.home),
+              onTap: () { 
+                Navigator.of(context).pop();
+                }
             ),
             new ListTile(
               title: new Text("Random users"),
@@ -32,24 +35,11 @@ class _HomepageState extends State<Homepage>
                 Navigator.of(context).pop();
                 Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new RandomUsers()));
               },
-            ),
-            new ListTile(
-              title: new Text("Data system"),
-              trailing: new Icon(Icons.arrow_right),
-               onTap: () { 
-                Navigator.of(context).pop();
-                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new DataSystem()));
-              },
-            ),
-             new ListTile(
-              title: new Text("Cancel"),
-              trailing: new Icon(Icons.cancel),
-              onTap: () => Navigator.of(context).pop(),
-            )
+            ),       
           ],
         ),
       ),
-      body: StreamBuilder(
+      body: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection('userdata').snapshots(),
         builder: (context, snapshot){
           if(!snapshot.hasData)
@@ -57,20 +47,31 @@ class _HomepageState extends State<Homepage>
             return Text('Loading...');
           }
           else
-          {
+          {            
             return ListView.builder(
               itemCount: snapshot.data.documents.length,
-              itemBuilder: (BuildContext context, int index) {
-                print(snapshot.data.documents[index]['name']);
-                return ListTile(
-                  leading: Text(snapshot.data.documents[index]['birthyear'].toString()),
-                  title: Text(snapshot.data.documents[index]['name']),
-                  subtitle: Text(snapshot.data.documents[index]['computer']),
+              itemBuilder: (BuildContext context, int index) {  
+                return Dismissible(
+                    key: Key(snapshot.data.documents[index].documentID),
+                    child: ListTile(
+                    leading: Text(snapshot.data.documents[index]['birthyear'].toString()),
+                    title: Text(snapshot.data.documents[index]['name']),
+                    subtitle: Text(snapshot.data.documents[index]['computer']),
+                  ),
+                  onDismissed: (dir) {
+                    snapshot.data.documents[index].reference.delete();
+                  },
                 );
              },
             );
           }
         },
+      ),
+            floatingActionButton: new FloatingActionButton(
+              onPressed: () {
+              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new DataSystem()));        
+        },
+        child: new Icon(Icons.add),
       ),
     );
   }
